@@ -315,7 +315,8 @@ if (selected == 'NIFTY 20'):
             print(bharatiartl)
 
         except:
-            print("Model is under repair")
+            bharatiartl = "No data available"
+            print(bharatiartl)
         st.success(bharatiartl)
       
     dmart = ''
