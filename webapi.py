@@ -290,31 +290,34 @@ if (selected == 'NIFTY 20'):
     
     bharatiartl = ''
     if st.button("BHARATIARTL"):
+        try:
+            
+            scaler = bharatiartl_scale
+            mod = bharatiartl_mod
 
-        scaler = bharatiartl_scale
-        mod = bharatiartl_mod
+            stock_search = 'BHARATIARTL'
+            symbol = stock_search.upper()
+            new_df = yt.download(f"{symbol}.NS")
+            new_df = new_df.filter(['Close'])
 
-        stock_search = 'BHARATIARTL'
-        symbol = stock_search.upper()
-        new_df = yt.download(f"{symbol}.NS")
-        new_df = new_df.filter(['Close'])
+            last_60_days = new_df[-60:].values
 
-        last_60_days = new_df[-60:].values
+            last_scaled = scaler.transform(last_60_days)
 
-        last_scaled = scaler.transform(last_60_days)
+            Xtesta = []
+            Xtesta.append(last_scaled)
+            Xtesta = np.array(Xtesta)
+            Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
 
-        Xtesta = []
-        Xtesta.append(last_scaled)
-        Xtesta = np.array(Xtesta)
-        Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
+            pred_price = mod.predict(Xtesta)
+            pred_price = scaler.inverse_transform(pred_price)
+            bharatiartl = pred_price
+            print(bharatiartl)
 
-        pred_price = mod.predict(Xtesta)
-        pred_price = scaler.inverse_transform(pred_price)
-        bharatiartl = pred_price
-        print(bharatiartl)
-    st.success(bharatiartl)
-    
-    
+        except:
+            print("Model is under repair")
+        st.success(bharatiartl)
+      
     dmart = ''
     if st.button("DMART"):
 
