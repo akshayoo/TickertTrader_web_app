@@ -263,28 +263,31 @@ if (selected == 'NIFTY 20'):
     
     bajajfinsv = ''
     if st.button("BAJAJFINSV"):
-
-        scaler = bajajfinsv_scale
-        mod = bajajfinsv_mod
-
-        stock_search = 'BAJAJFINSV'
-        symbol = stock_search.upper()
-        new_df = yt.download(f"{symbol}.NS")
-        new_df = new_df.filter(['Close'])
-
-        last_60_days = new_df[-60:].values
-
-        last_scaled = scaler.transform(last_60_days)
-
-        Xtesta = []
-        Xtesta.append(last_scaled)
-        Xtesta = np.array(Xtesta)
-        Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
-
-        pred_price = mod.predict(Xtesta)
-        pred_price = scaler.inverse_transform(pred_price)
-        bajajfinsv = pred_price
-        print(bajajfinsv)
+        try:
+            scaler = bajajfinsv_scale
+            mod = bajajfinsv_mod
+    
+            stock_search = 'BAJAJFINSV'
+            symbol = stock_search.upper()
+            new_df = yt.download(f"{symbol}.NS")
+            new_df = new_df.filter(['Close'])
+    
+            last_60_days = new_df[-60:].values
+    
+            last_scaled = scaler.transform(last_60_days)
+    
+            Xtesta = []
+            Xtesta.append(last_scaled)
+            Xtesta = np.array(Xtesta)
+            Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
+    
+            pred_price = mod.predict(Xtesta)
+            pred_price = scaler.inverse_transform(pred_price)
+            bajajfinsv = pred_price
+            print(bajajfinsv)
+        except:
+            bajajfinsv = "Data currently unavailable"
+            print(bajajfinsv)
     st.success(bajajfinsv)
     
     
@@ -315,7 +318,7 @@ if (selected == 'NIFTY 20'):
             print(bharatiartl)
 
         except:
-            bharatiartl = "No data available"
+            bharatiartl = "Data currently unavailable"
             print(bharatiartl)
         st.success(bharatiartl)
       
