@@ -206,18 +206,21 @@ if (selected == 'PREDICT'):
     
     if st.button("PREDICT"):
         
-        lbl = df["Company Name"].values
-        label = main_model_label.transform(lbl)
+        try:
+            lbl = df["Company Name"].values
+            label = main_model_label.transform(lbl)
 
-        df = df.drop(["Company Name"], axis = 1)
-        df["Company_name"] = label.tolist()
-        df = df.values
-        arr = np.asarray(df)
-        tr = main_model_scale2.transform(arr)
-        
-        pred = main_model.predict(tr)
-        pred =  main_model_scale1.inverse_transform(pred)
-        pred = pred[0]
+            df = df.drop(["Company Name"], axis = 1)
+            df["Company_name"] = label.tolist()
+            df = df.values
+            arr = np.asarray(df)
+            tr = main_model_scale2.transform(arr)
+            
+            pred = main_model.predict(tr)
+            pred =  main_model_scale1.inverse_transform(pred)
+            pred = pred[0]
+        except:
+            pred = "Data currently unavailable"
 
     st.success(pred)
     
@@ -237,28 +240,31 @@ if (selected == 'NIFTY 20'):
     
     asianpaint = ''
     if st.button("ASIANPAINT"):
+        try:
+            scaler = asianpaint_scale
+            mod = asianpaint_mod
 
-        scaler = asianpaint_scale
-        mod = asianpaint_mod
+            stock_search = 'ASIANPAINT'
+            symbol = stock_search.upper()
+            new_df = yt.download(f"{symbol}.NS")
+            new_df = new_df.filter(['Close'])
 
-        stock_search = 'ASIANPAINT'
-        symbol = stock_search.upper()
-        new_df = yt.download(f"{symbol}.NS")
-        new_df = new_df.filter(['Close'])
+            last_60_days = new_df[-60:].values
 
-        last_60_days = new_df[-60:].values
+            last_scaled = scaler.transform(last_60_days)
 
-        last_scaled = scaler.transform(last_60_days)
+            Xtesta = []
+            Xtesta.append(last_scaled)
+            Xtesta = np.array(Xtesta)
+            Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
 
-        Xtesta = []
-        Xtesta.append(last_scaled)
-        Xtesta = np.array(Xtesta)
-        Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
-
-        pred_price = mod.predict(Xtesta)
-        pred_price = scaler.inverse_transform(pred_price)
-        asianpaint = pred_price
-        print(asianpaint)
+            pred_price = mod.predict(Xtesta)
+            pred_price = scaler.inverse_transform(pred_price)
+            asianpaint = pred_price
+            print(asianpaint)
+        except:
+            asianpaint = "Data currently unavailable"
+            print(asianpaint)
     st.success(asianpaint)
     
     bajajfinsv = ''
@@ -1035,351 +1041,390 @@ if (selected == 'NIFTY PHARMA'):
     
     alkem = ''
     if st.button("ALKEM"):
+        try:
+            scaler = alkem_scale
+            mod = alkem_mod
 
-        scaler = alkem_scale
-        mod = alkem_mod
+            stock_search = 'ALKEM'
+            symbol = stock_search.upper()
+            new_df = yt.download(f"{symbol}.NS")
+            new_df = new_df.filter(['Close'])
 
-        stock_search = 'ALKEM'
-        symbol = stock_search.upper()
-        new_df = yt.download(f"{symbol}.NS")
-        new_df = new_df.filter(['Close'])
+            last_60_days = new_df[-60:].values
 
-        last_60_days = new_df[-60:].values
+            last_scaled = scaler.transform(last_60_days)
 
-        last_scaled = scaler.transform(last_60_days)
+            Xtesta = []
+            Xtesta.append(last_scaled)
+            Xtesta = np.array(Xtesta)
+            Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
 
-        Xtesta = []
-        Xtesta.append(last_scaled)
-        Xtesta = np.array(Xtesta)
-        Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
-
-        pred_price = mod.predict(Xtesta)
-        pred_price = scaler.inverse_transform(pred_price)
-        alkem = pred_price
-        print(alkem)
+            pred_price = mod.predict(Xtesta)
+            pred_price = scaler.inverse_transform(pred_price)
+            alkem = pred_price
+            print(alkem)
+        except:
+            alkem = "Data currently unavailable"
+            print(alkem)
     st.success(alkem)
     
     
     auropharma = ''
     if st.button("AUROPHARMA"):
+        try:
+            scaler = auropharma_scale
+            mod = auropharma_mod
 
-        scaler = auropharma_scale
-        mod = auropharma_mod
+            stock_search = 'AUROPHARMA'
+            symbol = stock_search.upper()
+            new_df = yt.download(f"{symbol}.NS")
+            new_df = new_df.filter(['Close'])
 
-        stock_search = 'AUROPHARMA'
-        symbol = stock_search.upper()
-        new_df = yt.download(f"{symbol}.NS")
-        new_df = new_df.filter(['Close'])
+            last_60_days = new_df[-60:].values
 
-        last_60_days = new_df[-60:].values
+            last_scaled = scaler.transform(last_60_days)
 
-        last_scaled = scaler.transform(last_60_days)
+            Xtesta = []
+            Xtesta.append(last_scaled)
+            Xtesta = np.array(Xtesta)
+            Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
 
-        Xtesta = []
-        Xtesta.append(last_scaled)
-        Xtesta = np.array(Xtesta)
-        Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
-
-        pred_price = mod.predict(Xtesta)
-        pred_price = scaler.inverse_transform(pred_price)
-        auropharma = pred_price
-        print(auropharma)
+            pred_price = mod.predict(Xtesta)
+            pred_price = scaler.inverse_transform(pred_price)
+            auropharma = pred_price
+            print(auropharma)
+        except:
+            auropharma = "Data currently unavailable"
+            print(auropharma)
     st.success(auropharma)
     
     
     biocon = ''
     if st.button("BIOCON"):
+        try:
+            scaler = biocon_scale
+            mod = biocon_mod
 
-        scaler = biocon_scale
-        mod = biocon_mod
+            stock_search = 'BIOCON'
+            symbol = stock_search.upper()
+            new_df = yt.download(f"{symbol}.NS")
+            new_df = new_df.filter(['Close'])
 
-        stock_search = 'BIOCON'
-        symbol = stock_search.upper()
-        new_df = yt.download(f"{symbol}.NS")
-        new_df = new_df.filter(['Close'])
+            last_60_days = new_df[-60:].values
 
-        last_60_days = new_df[-60:].values
+            last_scaled = scaler.transform(last_60_days)
 
-        last_scaled = scaler.transform(last_60_days)
+            Xtesta = []
+            Xtesta.append(last_scaled)
+            Xtesta = np.array(Xtesta)
+            Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
 
-        Xtesta = []
-        Xtesta.append(last_scaled)
-        Xtesta = np.array(Xtesta)
-        Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
-
-        pred_price = mod.predict(Xtesta)
-        pred_price = scaler.inverse_transform(pred_price)
-        biocon = pred_price
-        print(biocon)
+            pred_price = mod.predict(Xtesta)
+            pred_price = scaler.inverse_transform(pred_price)
+            biocon = pred_price
+            print(biocon)
+        except:
+            biocon = "Data currently unavailable"
+            print(biocon)
     st.success(biocon)
     
     
     cipla = ''
     if st.button("CIPLA"):
+        try:
+            scaler = cipla_scale
+            mod = cipla_mod
 
-        scaler = cipla_scale
-        mod = cipla_mod
+            stock_search = 'CIPLA'
+            symbol = stock_search.upper()
+            new_df = yt.download(f"{symbol}.NS")
+            new_df = new_df.filter(['Close'])
 
-        stock_search = 'CIPLA'
-        symbol = stock_search.upper()
-        new_df = yt.download(f"{symbol}.NS")
-        new_df = new_df.filter(['Close'])
+            last_60_days = new_df[-60:].values
 
-        last_60_days = new_df[-60:].values
+            last_scaled = scaler.transform(last_60_days)
 
-        last_scaled = scaler.transform(last_60_days)
+            Xtesta = []
+            Xtesta.append(last_scaled)
+            Xtesta = np.array(Xtesta)
+            Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
 
-        Xtesta = []
-        Xtesta.append(last_scaled)
-        Xtesta = np.array(Xtesta)
-        Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
-
-        pred_price = mod.predict(Xtesta)
-        pred_price = scaler.inverse_transform(pred_price)
-        cipla = pred_price
-        print(cipla)
+            pred_price = mod.predict(Xtesta)
+            pred_price = scaler.inverse_transform(pred_price)
+            cipla = pred_price
+            print(cipla)
+        except:
+            cipla = "Data currently unavailable"
+            print(cipla)
     st.success(cipla)
     
     
     drreddy = ''
     if st.button("DRREDDY"):
+        try:
+            scaler = drreddy_scale
+            mod = drreddy_mod
 
-        scaler = drreddy_scale
-        mod = drreddy_mod
+            stock_search = 'DRREDDY'
+            symbol = stock_search.upper()
+            new_df = yt.download(f"{symbol}.NS")
+            new_df = new_df.filter(['Close'])
 
-        stock_search = 'DRREDDY'
-        symbol = stock_search.upper()
-        new_df = yt.download(f"{symbol}.NS")
-        new_df = new_df.filter(['Close'])
+            last_60_days = new_df[-60:].values
 
-        last_60_days = new_df[-60:].values
+            last_scaled = scaler.transform(last_60_days)
 
-        last_scaled = scaler.transform(last_60_days)
+            Xtesta = []
+            Xtesta.append(last_scaled)
+            Xtesta = np.array(Xtesta)
+            Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
 
-        Xtesta = []
-        Xtesta.append(last_scaled)
-        Xtesta = np.array(Xtesta)
-        Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
-
-        pred_price = mod.predict(Xtesta)
-        pred_price = scaler.inverse_transform(pred_price)
-        drreddy = pred_price
-        print(drreddy)
+            pred_price = mod.predict(Xtesta)
+            pred_price = scaler.inverse_transform(pred_price)
+            drreddy = pred_price
+            print(drreddy)
+        except:
+            drreddy = ("Data currently unavailable")
+            print(drreddy)
     st.success(drreddy)
     
     
     glenmark = ''
     if st.button("GLENMARK"):
+        try:
+            scaler = glenark_scale
+            mod = glenmark_mod
 
-        scaler = glenark_scale
-        mod = glenmark_mod
+            stock_search = 'GLENMARK'
+            symbol = stock_search.upper()
+            new_df = yt.download(f"{symbol}.NS")
+            new_df = new_df.filter(['Close'])
 
-        stock_search = 'GLENMARK'
-        symbol = stock_search.upper()
-        new_df = yt.download(f"{symbol}.NS")
-        new_df = new_df.filter(['Close'])
+            last_60_days = new_df[-60:].values
 
-        last_60_days = new_df[-60:].values
+            last_scaled = scaler.transform(last_60_days)
 
-        last_scaled = scaler.transform(last_60_days)
+            Xtesta = []
+            Xtesta.append(last_scaled)
+            Xtesta = np.array(Xtesta)
+            Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
 
-        Xtesta = []
-        Xtesta.append(last_scaled)
-        Xtesta = np.array(Xtesta)
-        Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
-
-        pred_price = mod.predict(Xtesta)
-        pred_price = scaler.inverse_transform(pred_price)
-        glenmark = pred_price
-        print(glenmark)
+            pred_price = mod.predict(Xtesta)
+            pred_price = scaler.inverse_transform(pred_price)
+            glenmark = pred_price
+            print(glenmark)
+        except:
+            glenmark = "Data currently unavailable"
+            print(glenmark)
     st.success(glenmark)
     
     
     ipcalab = ''
     if st.button("IPCALAB"):
+        try:
+            scaler = ipcalab_scale
+            mod = ipcalab_mod
 
-        scaler = ipcalab_scale
-        mod = ipcalab_mod
+            stock_search = 'IPCALAB'
+            symbol = stock_search.upper()
+            new_df = yt.download(f"{symbol}.NS")
+            new_df = new_df.filter(['Close'])
 
-        stock_search = 'IPCALAB'
-        symbol = stock_search.upper()
-        new_df = yt.download(f"{symbol}.NS")
-        new_df = new_df.filter(['Close'])
+            last_60_days = new_df[-60:].values
 
-        last_60_days = new_df[-60:].values
+            last_scaled = scaler.transform(last_60_days)
 
-        last_scaled = scaler.transform(last_60_days)
+            Xtesta = []
+            Xtesta.append(last_scaled)
+            Xtesta = np.array(Xtesta)
+            Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
 
-        Xtesta = []
-        Xtesta.append(last_scaled)
-        Xtesta = np.array(Xtesta)
-        Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
-
-        pred_price = mod.predict(Xtesta)
-        pred_price = scaler.inverse_transform(pred_price)
-        ipcalab = pred_price
-        print(ipcalab)
+            pred_price = mod.predict(Xtesta)
+            pred_price = scaler.inverse_transform(pred_price)
+            ipcalab = pred_price
+            print(ipcalab)
+        except:
+            ipcalab = "Data currently unavailable"
+            print(ipcalab)
     st.success(ipcalab)
     
     
     jbchepharm = ''
     if st.button("JBCHEPHARM"):
+        try:
+            scaler = jbchepharm_scale
+            mod = jbchepharm_mod
 
-        scaler = jbchepharm_scale
-        mod = jbchepharm_mod
+            stock_search = 'JBCHEPHARM'
+            symbol = stock_search.upper()
+            new_df = yt.download(f"{symbol}.NS")
+            new_df = new_df.filter(['Close'])
 
-        stock_search = 'JBCHEPHARM'
-        symbol = stock_search.upper()
-        new_df = yt.download(f"{symbol}.NS")
-        new_df = new_df.filter(['Close'])
+            last_60_days = new_df[-60:].values
 
-        last_60_days = new_df[-60:].values
+            last_scaled = scaler.transform(last_60_days)
 
-        last_scaled = scaler.transform(last_60_days)
+            Xtesta = []
+            Xtesta.append(last_scaled)
+            Xtesta = np.array(Xtesta)
+            Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
 
-        Xtesta = []
-        Xtesta.append(last_scaled)
-        Xtesta = np.array(Xtesta)
-        Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
-
-        pred_price = mod.predict(Xtesta)
-        pred_price = scaler.inverse_transform(pred_price)
-        jbchepharm = pred_price
-        print(jbchepharm)
+            pred_price = mod.predict(Xtesta)
+            pred_price = scaler.inverse_transform(pred_price)
+            jbchepharm = pred_price
+            print(jbchepharm)
+        except:
+            jbchepharm = "Data currently unavailable"
+            print(jbchepharm)
     st.success(jbchepharm)
     
     
     lupin = ''
     if st.button("LUPIN"):
+        try:
+            scaler = lupin_scale
+            mod = lupin_mod
 
-        scaler = lupin_scale
-        mod = lupin_mod
+            stock_search = 'LUPIN'
+            symbol = stock_search.upper()
+            new_df = yt.download(f"{symbol}.NS")
+            new_df = new_df.filter(['Close'])
 
-        stock_search = 'LUPIN'
-        symbol = stock_search.upper()
-        new_df = yt.download(f"{symbol}.NS")
-        new_df = new_df.filter(['Close'])
+            last_60_days = new_df[-60:].values
 
-        last_60_days = new_df[-60:].values
+            last_scaled = scaler.transform(last_60_days)
 
-        last_scaled = scaler.transform(last_60_days)
+            Xtesta = []
+            Xtesta.append(last_scaled)
+            Xtesta = np.array(Xtesta)
+            Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
 
-        Xtesta = []
-        Xtesta.append(last_scaled)
-        Xtesta = np.array(Xtesta)
-        Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
-
-        pred_price = mod.predict(Xtesta)
-        pred_price = scaler.inverse_transform(pred_price)
-        lupin = pred_price
-        print(lupin)
+            pred_price = mod.predict(Xtesta)
+            pred_price = scaler.inverse_transform(pred_price)
+            lupin = pred_price
+            print(lupin)
+        except:
+            lupin = "Data currrently unavailable"
+            print(lupin)
     st.success(lupin)
     
     
     sunpharma = ''
     if st.button("SUNPHARMA"):
+        try:
+            scaler = sunpharma_scale
+            mod = sunpharma_mod
 
-        scaler = sunpharma_scale
-        mod = sunpharma_mod
+            stock_search = 'SUNPHARMA'
+            symbol = stock_search.upper()
+            new_df = yt.download(f"{symbol}.NS")
+            new_df = new_df.filter(['Close'])
 
-        stock_search = 'SUNPHARMA'
-        symbol = stock_search.upper()
-        new_df = yt.download(f"{symbol}.NS")
-        new_df = new_df.filter(['Close'])
+            last_60_days = new_df[-60:].values
 
-        last_60_days = new_df[-60:].values
+            last_scaled = scaler.transform(last_60_days)
 
-        last_scaled = scaler.transform(last_60_days)
+            Xtesta = []
+            Xtesta.append(last_scaled)
+            Xtesta = np.array(Xtesta)
+            Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
 
-        Xtesta = []
-        Xtesta.append(last_scaled)
-        Xtesta = np.array(Xtesta)
-        Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
-
-        pred_price = mod.predict(Xtesta)
-        pred_price = scaler.inverse_transform(pred_price)
-        sunpharma = pred_price
-        print(sunpharma)
+            pred_price = mod.predict(Xtesta)
+            pred_price = scaler.inverse_transform(pred_price)
+            sunpharma = pred_price
+            print(sunpharma)
+        except:
+            sunpharma = "Data currently unavailable"
+            print(sunpharma)
     st.success(sunpharma)
     
     
     suven = ''
     if st.button("SUVEN"):
+        try:
+            scaler = suven_scale
+            mod = suven_mod
 
-        scaler = suven_scale
-        mod = suven_mod
+            stock_search = 'SUVEN'
+            symbol = stock_search.upper()
+            new_df = yt.download(f"{symbol}.NS")
+            new_df = new_df.filter(['Close'])
 
-        stock_search = 'SUVEN'
-        symbol = stock_search.upper()
-        new_df = yt.download(f"{symbol}.NS")
-        new_df = new_df.filter(['Close'])
+            last_60_days = new_df[-60:].values
 
-        last_60_days = new_df[-60:].values
+            last_scaled = scaler.transform(last_60_days)
 
-        last_scaled = scaler.transform(last_60_days)
+            Xtesta = []
+            Xtesta.append(last_scaled)
+            Xtesta = np.array(Xtesta)
+            Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
 
-        Xtesta = []
-        Xtesta.append(last_scaled)
-        Xtesta = np.array(Xtesta)
-        Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
-
-        pred_price = mod.predict(Xtesta)
-        pred_price = scaler.inverse_transform(pred_price)
-        suven = pred_price
-        print(suven)
+            pred_price = mod.predict(Xtesta)
+            pred_price = scaler.inverse_transform(pred_price)
+            suven = pred_price
+            print(suven)
+        except:
+            suven = "Data currently unavaialble"
+            print(suven)
     st.success(suven)
     
     
     syngene = ''
     if st.button("SYNGENE"):
+        try:
+            scaler = syngene_scale
+            mod = syngene_mod
 
-        scaler = syngene_scale
-        mod = syngene_mod
+            stock_search = 'SYNGENE'
+            symbol = stock_search.upper()
+            new_df = yt.download(f"{symbol}.NS")
+            new_df = new_df.filter(['Close'])
 
-        stock_search = 'SYNGENE'
-        symbol = stock_search.upper()
-        new_df = yt.download(f"{symbol}.NS")
-        new_df = new_df.filter(['Close'])
+            last_60_days = new_df[-60:].values
 
-        last_60_days = new_df[-60:].values
+            last_scaled = scaler.transform(last_60_days)
 
-        last_scaled = scaler.transform(last_60_days)
+            Xtesta = []
+            Xtesta.append(last_scaled)
+            Xtesta = np.array(Xtesta)
+            Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
 
-        Xtesta = []
-        Xtesta.append(last_scaled)
-        Xtesta = np.array(Xtesta)
-        Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
-
-        pred_price = mod.predict(Xtesta)
-        pred_price = scaler.inverse_transform(pred_price)
-        syngene = pred_price
-        print(syngene)
+            pred_price = mod.predict(Xtesta)
+            pred_price = scaler.inverse_transform(pred_price)
+            syngene = pred_price
+            print(syngene)
+        except:
+            syngene = "Data currently unavailable"
+            print(syngene)
     st.success(syngene)
     
     zyduslife = ''
     if st.button("ZYDUSLIFE"):
+        try:
+            scaler = zyduslife_scale
+            mod = zyduslife_mod
 
-        scaler = zyduslife_scale
-        mod = zyduslife_mod
+            stock_search = 'ZYDUSLIFE'
+            symbol = stock_search.upper()
+            new_df = yt.download(f"{symbol}.NS")
+            new_df = new_df.filter(['Close'])
 
-        stock_search = 'ZYDUSLIFE'
-        symbol = stock_search.upper()
-        new_df = yt.download(f"{symbol}.NS")
-        new_df = new_df.filter(['Close'])
+            last_60_days = new_df[-60:].values
 
-        last_60_days = new_df[-60:].values
+            last_scaled = scaler.transform(last_60_days)
 
-        last_scaled = scaler.transform(last_60_days)
+            Xtesta = []
+            Xtesta.append(last_scaled)
+            Xtesta = np.array(Xtesta)
+            Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
 
-        Xtesta = []
-        Xtesta.append(last_scaled)
-        Xtesta = np.array(Xtesta)
-        Xtesta = np.reshape(Xtesta, (Xtesta.shape[0], Xtesta.shape[1], 1))
-
-        pred_price = mod.predict(Xtesta)
-        pred_price = scaler.inverse_transform(pred_price)
-        zyduslife = pred_price
-        print(zyduslife)
+            pred_price = mod.predict(Xtesta)
+            pred_price = scaler.inverse_transform(pred_price)
+            zyduslife = pred_price
+            print(zyduslife)
+        except:
+            zyduslife = "Data currently unavailable"
+            print(zyduslife)
     st.success(zyduslife)
     
     
@@ -1465,5 +1510,6 @@ if (selected == 'CONTACT & SUPPORT'):
     st.markdown('<a href="mailto:akshayramesh543@gmail.com">Mail to us ..</a>', unsafe_allow_html = True)
     st.subheader("Your valuble feedback helps us improve more....")
     st.markdown('<a href="mailto:akshayramesh543@gmail.com">Write to us ..</a>', unsafe_allow_html = True)
+    
     
     
