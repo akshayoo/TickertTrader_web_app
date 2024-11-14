@@ -298,7 +298,7 @@ if (selected == 'NIFTY 20'):
     
     
     bharatiartl = ''
-    if st.button("BHARATIARTL"):
+    if st.button("BHARTIARTL"):
         try:
             scaler = bharatiartl_scale
             mod = bharatiartl_mod
