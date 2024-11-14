@@ -303,7 +303,7 @@ if (selected == 'NIFTY 20'):
             scaler = bharatiartl_scale
             mod = bharatiartl_mod
 
-            stock_search = 'BHARATIARTL'
+            stock_search = 'BHARTIARTL'
             symbol = stock_search.upper()
             new_df = yt.download(f"{symbol}.NS")
             new_df = new_df.filter(['Close'])
